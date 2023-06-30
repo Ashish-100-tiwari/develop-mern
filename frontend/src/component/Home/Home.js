@@ -6,29 +6,21 @@ import MetaData from "../layout/MetaData.js";
 import {getProduct}from "../../actions/productAction"
 import {useDispatch,useSelector}from "react-redux";
 import Loader from "../layout/Loader/Loader";
-// import { useAlert } from "react-alert";
-import {toast} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { useAlert } from "react-alert";
+
 const Home = () => {
 
-  // const alert=useAlert();
+  const alert=useAlert();
   const dispatch = useDispatch();
   const {loading,error,products}=useSelector(state=>state.products);
 
   useEffect(()=>{
+   
     if(error){
-      toast.error("error "+error, {
-        icon: true,
-        theme: "colored"
-      });  
-    }else{
-      toast.success("Loading Products", {
-        icon: true,
-        theme: "colored"
-      });
+      return alert.error(error);
     }
     dispatch(getProduct());
-  },[dispatch,error]);
+  },[dispatch,error,alert]);
 
   return (
     <Fragment>
